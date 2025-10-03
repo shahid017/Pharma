@@ -120,7 +120,7 @@ async def extract_text_openai(image_data: bytes, filename: str) -> str:
             file_ext = 'jpeg'
         
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5",
             messages=[
                 {
                     "role": "user",
@@ -138,10 +138,11 @@ async def extract_text_openai(image_data: bytes, filename: str) -> str:
                     ]
                 }
             ],
-            max_tokens=1000
+            max_completion_tokens=2048
         )
         
-        return response.choices[0].message.content
+        content = response.choices[0].message.content
+        return content if content else ""
     except Exception as e:
         raise Exception(f"OpenAI Vision API error: {str(e)}")
 
@@ -155,7 +156,7 @@ async def extract_text_google_vision(image_data: bytes) -> str:
         client = vision.ImageAnnotatorClient()
         
         image = vision.Image(content=image_data)
-        response = client.text_detection(image=image)
+        response = client.text_detection(image=image)  # type: ignore
         
         if response.error.message:
             raise Exception(f"Google Vision API error: {response.error.message}")
@@ -172,6 +173,9 @@ async def extract_text_google_vision(image_data: bytes) -> str:
 @app.post("/api/process-prescription", response_model=ProcessedPrescription)
 async def process_prescription(file: UploadFile = File(...)):
     try:
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="Filename is required")
+        
         allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf']
         file_ext = file.filename.split('.')[-1].lower()
         
