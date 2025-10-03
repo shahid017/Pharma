@@ -120,7 +120,7 @@ async def extract_text_openai(image_data: bytes, filename: str) -> str:
             file_ext = 'jpeg'
         
         response = client.chat.completions.create(
-            model="gpt-5",
+            model="gpt-4o",
             messages=[
                 {
                     "role": "user",
@@ -138,7 +138,7 @@ async def extract_text_openai(image_data: bytes, filename: str) -> str:
                     ]
                 }
             ],
-            max_completion_tokens=2048
+            max_tokens=2048
         )
         
         content = response.choices[0].message.content
@@ -176,7 +176,7 @@ async def process_prescription(file: UploadFile = File(...)):
         if not file.filename:
             raise HTTPException(status_code=400, detail="Filename is required")
         
-        allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf']
+        allowed_extensions = ['jpg', 'jpeg', 'png']
         file_ext = file.filename.split('.')[-1].lower()
         
         if file_ext not in allowed_extensions:
@@ -190,7 +190,7 @@ async def process_prescription(file: UploadFile = File(...)):
         if file_ext == 'pdf':
             raise HTTPException(
                 status_code=400,
-                detail="PDF support requires additional processing. Please upload an image (JPEG/PNG) of the prescription."
+                detail="PDF processing is not supported yet. Please upload an image (JPEG/PNG) of the prescription."
             )
         
         try:

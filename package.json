@@ -1,6 +1,7 @@
 {
   "name": "workspace",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
@@ -12,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",

@@ -8,9 +8,9 @@ export default function PrescriptionUploader({ onProcess, loading }) {
 
   const handleFileChange = (file) => {
     if (file) {
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf']
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png']
       if (!allowedTypes.includes(file.type)) {
-        alert('Please upload a JPEG, PNG, or PDF file')
+        alert('Please upload a JPEG or PNG file')
         return
       }
 
@@ -71,7 +71,7 @@ export default function PrescriptionUploader({ onProcess, loading }) {
           ref={fileInputRef}
           type="file"
           className="hidden"
-          accept=".jpg,.jpeg,.png,.pdf"
+          accept=".jpg,.jpeg,.png"
           onChange={(e) => handleFileChange(e.target.files[0])}
         />
 
@@ -117,7 +117,7 @@ export default function PrescriptionUploader({ onProcess, loading }) {
             </>
           )}
         </div>
-        <p className="text-xs text-gray-500 mt-2">Supported formats: JPEG, PNG, PDF</p>
+        <p className="text-xs text-gray-500 mt-2">Supported formats: JPEG, PNG</p>
       </div>
 
       {selectedFile && (
