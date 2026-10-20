@@ -15,12 +15,12 @@ function App() {
     const formData = new FormData()
     formData.append('file', file)
 
-    const apiUrl = window.location.hostname === 'localhost' 
-      ? 'http://localhost:8000' 
-      : `https://${window.location.hostname.replace('-5000', '-8000')}`;
+    // Same-origin /api for Cloudflare Pages Functions (and Vite proxy in local dev).
+    // Override with VITE_API_URL only if the API is hosted elsewhere.
+    const apiBase = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 
     try {
-      const response = await fetch(`${apiUrl}/api/process-prescription`, {
+      const response = await fetch(`${apiBase}/api/process-prescription`, {
         method: 'POST',
         body: formData,
       })

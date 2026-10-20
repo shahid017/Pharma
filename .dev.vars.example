@@ -1,0 +1,3 @@
+OPENAI_API_KEY=sk-your-openai-key
+# Optional fallback:
+# GOOGLE_VISION_API_KEY=your-google-vision-api-key

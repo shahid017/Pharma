@@ -1,0 +1,9 @@
+name = "pharma"
+compatibility_date = "2026-10-20"
+pages_build_output_dir = "./dist"
+
+# Secrets (set via CLI, do not commit values):
+#   npx wrangler pages secret put OPENAI_API_KEY --project-name=pharma
+#   npx wrangler pages secret put GOOGLE_VISION_API_KEY --project-name=pharma
+#
+# For local Pages Functions development, copy .dev.vars.example to .dev.vars
