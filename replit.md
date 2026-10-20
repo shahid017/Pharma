@@ -27,9 +27,13 @@ The application uses Tailwind CSS with PostCSS for utility-first styling. This a
 
 ### Backend Architecture
 
-**Framework**: FastAPI (Python)
+**Production (Cloudflare)**: Pages Functions (JavaScript)
 
-The backend is built with FastAPI, a modern Python web framework that provides automatic API documentation, type validation, and async support. The server handles file uploads, image processing, and AI service integration.
+The production API runs as Cloudflare Pages Functions under `/api/*` (`functions/api/`). These Workers receive image uploads, call OpenAI Vision (with optional Google Vision REST fallback), and normalize medical abbreviations. Secrets are stored as Cloudflare environment variables (`OPENAI_API_KEY`, optional `GOOGLE_VISION_API_KEY`).
+
+**Local / optional**: FastAPI (Python)
+
+The original FastAPI backend in `backend/` remains for local Python development. Vite proxies `/api` to `http://127.0.0.1:8000` when using `npm run dev`.
 
 **CORS Configuration**: 
 The application allows all origins (`allow_origins=["*"]`) for cross-origin requests, enabling the frontend to communicate with the backend during development. This should be restricted to specific domains in production.
